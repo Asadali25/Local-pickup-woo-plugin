@@ -115,7 +115,7 @@ display: inline;
 .label1-text{
     color: #2B2B2B;
     font-size: 14px;
-    padding-left: 20px;
+    padding-left: 25px;
     font-weight: 300;
 }
 /* level 2 option 2 */
@@ -127,7 +127,7 @@ display: inline;
 .label2-text{
     color: #2B2B2B;
     font-size: 14px;
-    padding-left: 20px;
+    padding-left: 25px;
     font-weight: 300;
 }
 .billing_adr{
@@ -144,9 +144,319 @@ display: inline;
 .label3-text{
     color: #2B2B2B;
     font-size: 14px;
-    padding-left: 20px;
+    padding-left: 25px;
     font-weight: 300;
 }
-#radio2:checked{
-    background-color: black;
+
+.cityId{
+	display: none !important;
+}
+
+/* ************RADIO BUTTON CSS***************** */
+
+        /* Hide the default radio button */
+        .custom-radio-btn input[type="radio"] {
+            display: none;
+        }
+
+        /* Style the custom radio button container (label) */
+        .custom-radio-btn {
+            /* display: inline-block; */
+            position: relative;
+            padding-left: 25px; /* Adjust as needed */
+            cursor: pointer;
+        }
+
+        /* Style the custom checkmark (span) */
+        .custom-radio-btn .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 18px; /* Adjust as needed */
+            width: 18px; /* Adjust as needed */
+            /* background-color: #ccc; */
+			border: 1px solid black;
+            border-radius: 50%;
+        }
+
+        /* Style the custom checkmark when the radio button is checked */
+        .custom-radio-btn input[type="radio"]:checked + .checkmark {
+            background-color: #000000; /* Change this color to match your design */
+        }
+
+        /* Style the custom checkmark's appearance (e.g., a dot) when checked */
+        .custom-radio-btn input[type="radio"]:checked + .checkmark::after {
+            content: "";
+            display: block;
+            border: 2px solid #bebebe; 
+            border-radius: 50%;
+            height: 12px;
+            width: 12px; 
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+
+
+
+
+/* ######################################### */
+/* Modal */
+.modal {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 99999;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	overflow: hidden;
+  }
+  
+  .modal-content {
+	background-color: #fff;
+	padding: 20px 20px 20px 20px;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+  
+  .close {
+	position: absolute;
+	top: 15px;
+	left: 0;
+	padding: 10px;
+	cursor: pointer;
+  }
+  .modal-open {
+    overflow: hidden;
+    position: fixed;
+}
+.modal_title{
+	text-align: center;
+	font-size: 20px;
+	font-weight: 400;
+}
+.size-svg{
+	display: block;
+	padding-top: 15px;
+	padding-bottom: 20px;
+}
+
+#openModal{
+	border: none;
+	padding: unset;
+	margin: unset;
+	text-decoration: underline;
+	font-size: 14px;
+	font-weight: 400;
+	padding-left: 2px;
+  }
+  #openModal:hover{
+	background-color: transparent;
+	color: black;
+  }
+  
+  .side_results_city{
+	font-size: 18px;
+	cursor: pointer;
+	font-weight: 500;
+	padding: 20px 20px;
+  }
+  /* modal close */
+  
+
+  /* Pop Up */
+  #popup {
+  
+	position: absolute;
+	bottom: -100%;
+	left: 0;
+	width: 100%;
+	height: 94%;
+	background-color: #fff;
+	opacity: 0;
+	transition: all 0.5s ease-in-out;
+  }
+  
+  #popup.active {
+	bottom: 0;
+	opacity: 1;
+  }
+  
+  #popup-content {
+	position: relative;
+	top: 25%;
+	transform: translateY(-50%);
+	text-align: center;
+	padding: 20px 20px 20px 0px;
+	background-color: #fff;
+  }
+  #close-button {
+	position: absolute;
+    border: none;
+    top: 42px;
+    z-index: 5;
+    right: 10px;
+    cursor: pointer;
+    font-size: 30px;
+    font-weight: 400;
+  }
+  #close-button:hover{
+	background-color: transparent;
+	color: #000;
+	box-shadow: none;
+  }
+  
+  
+.cash_pay , .credit_pay{
+	display: inline;
+}
+.credit_pay{
+	padding-right: 15px;
+}
+.address-comment{
+	font-size: 14px;
+    font-weight: 400;
+	padding-top: 10px;
+    line-height: 19px;
+    padding-bottom: 24px;
+}
+.opening-hrs{
+	font-size: 14px;
+    font-weight: 400;
+	padding-top: 7px;
+
+}
+#select_pickup{
+	width: 100%;
+	font-size: 16px;
+	font-weight: 400;
+}
+.balloon-body {
+	text-align: left;
+  }
+  .balloon-header {
+	text-align: left;
+	line-height: 20px;
+    margin: unset !important;
+	width: 100%;
+	padding-bottom: none;
+  }
+  /* popup close */
+  
+  
+  .address {
+	display: flex;
+	height: 100vh;
+  }
+  
+  .search-content {
+	flex : 1;
+	height: 100vh;
+	position: relative;
+  
+  }
+  
+  .map {
+	flex : 3;
+  }
+  
+  #searchInput {
+	padding: 14px;
+	margin-right: 20px;
+	width: 345px;
+	border: 1px solid #E8E8E8;
+	background-color: #fff;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 120%;
+	color: var(--Grey, #C0C0C0);
+  }
+  
+  #searchResults {
+	padding-left: unset !important;
+  }
+  
+  .city-list {
+	background: #ffffff;
+	margin-right: 20px;
+	border-top: 1px solid #D8D8D8;
+	list-style: none;
+	color: #000;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 120%;
+  }
+  
+  .city-list:hover {
+	background: #F6F6F6;
+  }
+  
+  .city-list:first-child {
+	border-top: unset;
+  }
+  
+  .sub-item {
+	color: #C0C0C0;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+  }
+  
+
+  
+  @media screen and (max-width: 768px) {
+	.address {
+		flex-direction: column;
+	}
+  
+	.search-content {
+		width: 100%;
+	}
+  
+	.map {
+		width: 100%;
+	}
+  }
+
+  /* order css */
+  h3#order_review_heading{
+	display: none;
+  }
+  th.product-name{
+	display: none;
+  }
+  th.product-total{
+	display: none;
+  }
+
+
+  /* checkout order review html */
+.order_row1{
+	padding-top: 20px;
+	display: flex;
+	justify-content: center;
+	gap: 8px;
+}
+.row1_text{
+	padding-right: 25px;
+}
+.row1_svg{
+	padding-top: 2px;
+
+}
+.order_row2{
+	display: flex;
+	justify-content: center;
+	gap: 8px;
+}
+.row2_svg{
+	padding-top: 2px;
+
 }

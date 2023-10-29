@@ -48,9 +48,13 @@ let map;
       zoom: 10,
     });
     
-    createMarkers(map, pickupPointData);
+createMarkers(map, pickupPointData);
 
-  }
+const inputField = document.getElementById("urban_input");
+inputField.addEventListener("change", function() {
+  map.destroy();
+});
+}
 
 
 
@@ -58,7 +62,7 @@ let map;
 
   
   // Create Markers
-  function createMarkers(map, data) {
+  function createMarkers(map, data) {  
     let objectManager = new ymaps.ObjectManager({
       clusterize: true,
       geoObjectOpenBalloonOnClick: false,
@@ -143,7 +147,7 @@ let map;
       const pickupName = headerDocument.body.textContent;
       document.getElementById("popup-content").innerHTML = combinedContent;
       const selected_pickup = document.getElementById("select_pickup");
-      const level2_input_id = document.getElementById("billingAddress");
+      const level2_input_id = document.getElementById("pickupAddress");
       // click event on popup button
       selected_pickup.addEventListener("click", () => {
         level2_input_id.value = pickupName;

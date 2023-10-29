@@ -1,28 +1,14 @@
 <?php
 
 
-//CHANGE TEXT ON CHECKOUT
-// add_filter('gettext', 'translate_reply');
-// add_filter('ngettext', 'translate_reply');
-
-function translate_reply($translated) {
-$translated = str_ireplace('Способы Доставки', 'Выберите способ доставки', $translated);
-$translated = str_ireplace('Оплата и доставка', 'Введите ваши данные', $translated);
-$translated = str_ireplace('Пункты выдачи заказов', 'Выберите Пункт выдачи заказов', $translated);
-$translated = str_ireplace('PICK-UP POINTS', 'Выберите Пункт выдачи заказов', $translated);
-$translated = str_ireplace('ENTER YOUR DETAILS', 'Введите ваши данные', $translated);
-	$translated = str_ireplace('Free!', 'Бесплатно', $translated);
-	$translated = str_ireplace('SHIPPING', 'Доставка', $translated);
-	$translated = str_ireplace('Select Pick-up point on the map. Address will be filled automatically.', 'Выберите ПВЗ на карте. Адрес подставиться автоматически.', $translated);
-	$translated = str_ireplace('SUBTOTAL', 'Подытог', $translated);
-	$translated = str_ireplace('THE SIZE', 'ВЫБЕРИТЕ РАЗМЕР', $translated);
-	
-	
-return $translated;
+function custom_free_shipping_label($label, $method) {
+    // Check if the method is the Free Shipping method
+    if ($method->method_id === 'free_shipping') {
+        $label = 'БЕСПЛАТНО!';
+    }
+    return $label;
 }
-
-
-
+add_filter('woocommerce_cart_shipping_method_full_label', 'custom_free_shipping_label', 10, 2);
 
 
 // Remove Payment Methods 
@@ -102,17 +88,19 @@ function misha_email_first($checkout_fields) {
 
 
 // Product thumbnail in checkout
-add_filter( 'woocommerce_cart_item_name', 'product_thumbnail_in_checkout', 20, 3 );
-function product_thumbnail_in_checkout( $product_name, $cart_item, $cart_item_key ){
-    if ( is_checkout() ) {
+add_filter( 'woocommerce_cart_item_name', 'bbloomer_product_image_review_order_checkout', 9999, 3 );
 
-        $thumbnail   = $cart_item['data']->get_image(array( 80, 100));
-        $image_html  = '<div class="product-item-thumbnail">'.$thumbnail.'</div> ';
+function bbloomer_product_image_review_order_checkout( $name, $cart_item, $cart_item_key ) {
+    if ( ! is_checkout() ) return $name;
+    $product = $cart_item['data'];
+    $thumbnail = $product->get_image( array( '80', '100' ), array( 'class' => 'alignleft' ) );
 
-        $product_name = $image_html . $product_name;
-    }
-    return $product_name;
+    // Wrap the product name in a <span> tag with a class
+    $productNameHTML = '<span class="woo-product-name">' . $name . '</span>';
+    
+    return $thumbnail . $productNameHTML;
 }
+
 
 
 
@@ -144,31 +132,41 @@ function hide_coupon_field_on_cart( $enabled ) {
     add_filter( 'woocommerce_coupons_enabled', 'hide_coupon_field_on_cart' );
 
 
+
+
+
+
+
     // woocommerce input validataion and notice
-// Add a notice if the customer doesn't choose an option
-function custom_validate_radio_option() {
-    if (empty($_POST['customer-selection'])) {
-        wc_add_notice('Please choose an option before proceeding to checkout.', 'error');
+// function ask_manager_field_validation() {
+//     if (empty($_POST['billing_address'])) {
+//         wc_add_notice('Please Enter Address or Choose From Map.', 'error');
+//     }
+// }
+// add_action('woocommerce_checkout_process', 'ask_manager_field_validation');
+
+
+
+
+
+// Add order note for custom Radio
+add_action('woocommerce_new_order', 'custom_radio_order_notes');
+
+function custom_radio_order_notes($order_id) {
+    // Get the order object
+    $order = wc_get_order($order_id);
+
+    // Check if the order exists
+    if ($order) {
+        // Get the selected radio option
+        $radio_option = sanitize_text_field($_POST['customer-selection']);
+
+        // Add a note to the order
+        $order->add_order_note("Customer selected radio option: $radio_option");
     }
 }
-add_action('woocommerce_checkout_process', 'custom_validate_radio_option');
 
 
-
-
-
-
-
-// Add an order note with the customer's selection
-function custom_add_order_note($order_id) {
-    $customer_selection = isset($_POST['customer-selection']) ? $_POST['customer-selection'] : '';
-    
-    if (!empty($customer_selection)) {
-        $order = wc_get_order($order_id);
-        $order->add_order_note('Customer selected: ' . $customer_selection);
-    }
-}
-add_action('woocommerce_new_order', 'custom_add_order_note');
 
 
 
@@ -185,12 +183,15 @@ add_action('woocommerce_new_order', 'custom_add_order_note');
 
 
 
+
+
+        
 add_filter('woocommerce_checkout_posted_data', 'update_billing_address_from_custom_field');
 
 function update_billing_address_from_custom_field($posted_data) {
-    if (isset($_POST['billing_address'])) {
+    if (isset($_POST['pickup_address'])) {
         // Get the custom address value
-        $customAddress = $_POST['billing_address'];
+        $customAddress = $_POST['pickup_address'];
 
         // Update the billing address with the custom address
         $posted_data['billing_address_1'] = $customAddress;

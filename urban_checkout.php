@@ -3,7 +3,7 @@
 /*
 Plugin Name: Urban Custom Checkout
 Description: Add Custom Functionality to Checkout Page
-Version: 1.0
+Version: 11.0
 Author: Asad Ali
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
@@ -62,7 +62,7 @@ function urban_custom_checkout_add_live_search_box() {
  <input type="text" 
                                id="urban_input" 
                                autocomplete="new-password"
-                               placeholder= "Поиск города..."
+                               placeholder= "Город*"
                                name="city_name"
                                class="urb-input">
                                
@@ -79,7 +79,9 @@ function urban_custom_checkout_add_live_search_box() {
            <label class="custom-radio-btn"> <input type="radio" name="customer-selection" id="radio1" value="option_1">
             САМОВЫВОЗ СДЭК, 0 руб. <span class="checkmark"></span></label>
             <p class="label1-text">Из удобного Пункта Выдачи с отдельной примерочной, <span>2-3 дня</span></p>
-            <button type="button" id="openModal">Выбрать пункт выдачи</button>
+            <button type="button" id="openModal" disabled >Выбрать пункт выдачи</button> <br>
+            <input type="text" name="pickup_address" id="pickupAddress" class="pickup_adr" readonly >
+
             
         </div>
         <div class="lvl2-opt2" id="l2option_2">
@@ -117,7 +119,9 @@ function custom_html_for_modal(){
 </svg>
 </span>
                   <input type="text" id="searchInput" placeholder="Поиск">
+                  <div class="cities_search_results">
                   <ul id="searchResults"></ul>
+                  </div>
                   <div id="popup">
                     <button id="close-button">×</button>
                     <div id="popup-content">
@@ -163,15 +167,68 @@ function custom_html_before_order(){
 <?php
 }
 
+function custom_html_after_order_btn(){
+?>
+<div class="phone_block">
+<div class="phone_svg">
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <path d="M27 4C27 4 31.6669 4.42426 37.6066 10.364C43.5463 16.3037 43.9706 20.9706 43.9706 20.9706" stroke="#2B2B2B" stroke-width="3" stroke-linecap="round"/>
+  <path d="M28.4141 11.0713C28.4141 11.0713 30.394 11.637 33.3638 14.6068C36.3337 17.5767 36.8993 19.5566 36.8993 19.5566" stroke="#2B2B2B" stroke-width="3" stroke-linecap="round"/>
+  <path d="M30.2014 30.0544L29.1138 29.0214L30.2014 30.0544ZM31.1123 29.0954L32.1999 30.1284H32.1999L31.1123 29.0954ZM35.9456 28.4246L35.1974 29.7247H35.1974L35.9456 28.4246ZM39.7667 30.624L39.0184 31.924L39.7667 30.624ZM40.8433 37.5169L41.9309 38.5499L40.8433 37.5169ZM38.0022 40.508L36.9147 39.475L38.0022 40.508ZM35.3526 41.9262L35.4999 43.4189L35.3526 41.9262ZM15.6307 32.9504L16.7183 31.9173L15.6307 32.9504ZM6.00578 13.9319L4.50793 14.0123L4.50793 14.0123L6.00578 13.9319ZM18.955 17.0062L20.0426 18.0393H20.0426L18.955 17.0062ZM19.2685 11.3862L20.4933 10.5202L19.2685 11.3862ZM16.7465 7.81923L15.5217 8.6852V8.6852L16.7465 7.81923ZM10.5229 7.21728L11.6105 8.25031L10.5229 7.21728ZM7.3837 10.5223L6.29611 9.48924L6.29611 9.48924L7.3837 10.5223ZM22.1262 26.1118L23.2138 25.0788L22.1262 26.1118ZM31.289 31.0874L32.1999 30.1284L30.0247 28.0624L29.1138 29.0214L31.289 31.0874ZM35.1974 29.7247L39.0184 31.924L40.5149 29.3239L36.6939 27.1246L35.1974 29.7247ZM39.7558 36.4838L36.9147 39.475L39.0898 41.541L41.9309 38.5499L39.7558 36.4838ZM35.2052 40.4334C32.3352 40.7167 24.8467 40.475 16.7183 31.9173L14.5431 33.9834C23.4019 43.31 31.8522 43.779 35.4999 43.4189L35.2052 40.4334ZM16.7183 31.9173C8.96606 23.7557 7.6657 16.8711 7.50362 13.8515L4.50793 14.0123C4.70644 17.7107 6.2768 25.2805 14.5431 33.9834L16.7183 31.9173ZM19.469 18.6432L20.0426 18.0393L17.8674 15.9732L17.2938 16.5771L19.469 18.6432ZM20.4933 10.5202L17.9713 6.95326L15.5217 8.6852L18.0437 12.2522L20.4933 10.5202ZM9.43531 6.18425L6.29611 9.48924L8.47129 11.5553L11.6105 8.25031L9.43531 6.18425ZM18.3814 17.6101C17.2938 16.5771 17.2924 16.5786 17.291 16.58C17.2906 16.5806 17.2892 16.582 17.2882 16.583C17.2863 16.5851 17.2844 16.5871 17.2824 16.5893C17.2785 16.5935 17.2744 16.5979 17.2702 16.6025C17.2618 16.6118 17.2529 16.6217 17.2436 16.6325C17.2249 16.654 17.2043 16.6786 17.1823 16.7064C17.1384 16.762 17.0886 16.8302 17.0364 16.9118C16.9318 17.0753 16.8183 17.2906 16.7222 17.5607C16.5268 18.1098 16.4204 18.837 16.5534 19.7451C16.8148 21.5294 17.984 23.9288 21.0387 27.1448L23.2138 25.0788C20.3585 22.0727 19.6552 20.2213 19.5217 19.3102C19.4573 18.8707 19.5228 18.6391 19.5486 18.5664C19.5632 18.5255 19.5727 18.5142 19.5634 18.5287C19.5589 18.5358 19.5499 18.549 19.5348 18.5681C19.5272 18.5777 19.5181 18.5887 19.5072 18.6013C19.5018 18.6075 19.4959 18.6141 19.4895 18.6211C19.4863 18.6246 19.483 18.6282 19.4796 18.6319C19.4779 18.6337 19.4762 18.6356 19.4744 18.6375C19.4735 18.6384 19.4722 18.6398 19.4717 18.6403C19.4704 18.6417 19.469 18.6432 18.3814 17.6101ZM21.0387 27.1448C24.0844 30.3514 26.3846 31.612 28.1396 31.897C29.0402 32.0433 29.7691 31.9265 30.3211 31.7087C30.591 31.6023 30.8044 31.4773 30.9646 31.3637C31.0446 31.307 31.1111 31.2533 31.1648 31.2061C31.1917 31.1825 31.2154 31.1606 31.2361 31.1407C31.2464 31.1307 31.256 31.1213 31.2648 31.1124C31.2692 31.1079 31.2734 31.1036 31.2775 31.0995C31.2795 31.0974 31.2815 31.0953 31.2834 31.0933C31.2843 31.0923 31.2858 31.0909 31.2862 31.0904C31.2876 31.0889 31.289 31.0874 30.2014 30.0544C29.1138 29.0214 29.1152 29.0199 29.1166 29.0185C29.117 29.018 29.1184 29.0166 29.1193 29.0157C29.1211 29.0138 29.1229 29.012 29.1246 29.0102C29.1281 29.0066 29.1315 29.0031 29.1349 28.9997C29.1416 28.993 29.1479 28.9867 29.154 28.9808C29.1661 28.9692 29.1769 28.9593 29.1865 28.9509C29.2056 28.9341 29.2199 28.9232 29.2291 28.9167C29.2478 28.9034 29.2459 28.9079 29.2204 28.918C29.1818 28.9332 29 28.9974 28.6206 28.9358C27.8155 28.8051 26.0781 28.0943 23.2138 25.0788L21.0387 27.1448ZM17.9713 6.95326C15.9441 4.0861 11.8877 3.60237 9.43531 6.18425L11.6105 8.25031C12.6562 7.14942 14.497 7.2359 15.5217 8.6852L17.9713 6.95326ZM7.50362 13.8515C7.46076 13.0529 7.80851 12.2531 8.47129 11.5553L6.29611 9.48924C5.22441 10.6175 4.40985 12.1849 4.50793 14.0123L7.50362 13.8515ZM36.9147 39.475C36.3566 40.0625 35.7727 40.3774 35.2052 40.4334L35.4999 43.4189C36.994 43.2715 38.2031 42.4746 39.0898 41.541L36.9147 39.475ZM20.0426 18.0393C21.9778 16.0019 22.1147 12.8136 20.4933 10.5202L18.0437 12.2522C18.888 13.4463 18.7585 15.0351 17.8674 15.9732L20.0426 18.0393ZM39.0184 31.924C40.6601 32.8689 40.9813 35.1935 39.7558 36.4838L41.9309 38.5499C44.5409 35.8021 43.7808 31.2037 40.5149 29.3239L39.0184 31.924ZM32.1999 30.1284C32.9708 29.3168 34.172 29.1345 35.1974 29.7247L36.6939 27.1246C34.497 25.8601 31.7723 26.2225 30.0247 28.0624L32.1999 30.1284Z" fill="#2B2B2B"/>
+</svg>
+</div>
+<div class="phone_row1">
+Нужна помощь С заказом?
+</div>
+<div class="phone_row2">
+8 800 888 88 88 (с 8:00 до 22:00)
+</div>
+</div>
+
+
+<?php
+}
+
+// Add text to replace the header on the checkout page
+function add_text_to_checkout_page() {
+    if (is_checkout() && !is_order_received_page()) {
+    ?>
+    <div class="checkout_header_wrape">
+        <div class="checkout_inner_wrap">
+    <div class="checkout_header">
+        <div class="checkout_header_text">
+            <h3>8 800 888 88 88</h3>
+            <p>Заказ можно легко оформить по телефону</p>
+        </div>
+        <div class="checkout_logo">
+        <h1><a href="<?php echo esc_url(home_url('/')); ?>">URBAN<strong>BOSS</strong></a></h1>
+        </div>
+    </div>
+    </div>
+    </div>
+    <?php
+    }
+}
+function custom_woocommerce_breadcrumbs(){
+?>
+<div class="woo-crubs">
+    <p> <a href="<?php echo esc_url(home_url('/')); ?>">ГЛАВНАЯ</a> / оФОРМЛЕНИЕ ЗАКАЗА</p>
+</div>
+<?php
+}
+
+
 
 //    _______Add Actions____________
-
+add_action('woocommerce_before_checkout_form' , 'custom_woocommerce_breadcrumbs');
 add_action('wp_enqueue_scripts', 'enqueue_plugin_assets_on_checkout');
 add_action('woocommerce_review_order_before_submit', 'custom_html_before_order');
+add_action('woocommerce_review_order_after_submit' , 'custom_html_after_order_btn');
 add_action('wp_ajax_live_search', 'live_search_callback');
 add_action('wp_ajax_nopriv_live_search', 'live_search_callback'); // Allow for non-logged-in users
 add_action('woocommerce_after_checkout_billing_form', 'urban_custom_checkout_add_live_search_box'); // Add live search box
 add_action('woocommerce_after_checkout_form', 'custom_html_for_modal');
+add_action('wp', 'add_text_to_checkout_page');
 add_action('admin_init', 'urban_custom_checkout_check_woocommerce');
 
 

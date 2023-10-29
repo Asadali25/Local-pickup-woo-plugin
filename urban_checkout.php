@@ -56,6 +56,7 @@ function enqueue_plugin_assets_on_checkout() {
 
 }
 
+
 // Inject HTML to Checkout
 function urban_custom_checkout_add_live_search_box() {
     ?>
@@ -216,7 +217,6 @@ function custom_woocommerce_breadcrumbs(){
 </div>
 <?php
 }
-
 
 
 //    _______Add Actions____________

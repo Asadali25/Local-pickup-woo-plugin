@@ -218,3 +218,54 @@ function update_billing_city_from_custom_field($posted_data) {
 
     return $posted_data;
 }
+
+add_filter('woocommerce_checkout_posted_data', 'update_billing_city_code_from_custom_field');
+
+function update_billing_city_code_from_custom_field($posted_data) {
+    if (isset($_POST['city_code'])) {
+        // Get the custom city value
+        $customCityCode = $_POST['city_code'];
+
+        // Update the billing city with the custom address
+        $posted_data['billing_postcode'] = $customCityCode;
+    }
+
+    return $posted_data;
+}
+
+
+
+
+function add_slashed_regular_price_on_checkout_subtotal( $subtotal, $cart_item, $cart_item_key ) {
+    $product = $cart_item['data'];
+
+    if ( $product->is_on_sale() ) {
+        $regular_price = wc_price( $product->get_regular_price() );
+        $sale_price = wc_price( $product->get_sale_price() );
+
+        // Create a string with the slashed regular price and the sale price
+        $item_price = ' <del>' . $regular_price . '</del>';
+
+        // Append the item price to the subtotal
+        $subtotal .= ' ' . $item_price;
+    }
+
+    return $subtotal;
+}
+add_filter( 'woocommerce_cart_item_subtotal', 'add_slashed_regular_price_on_checkout_subtotal', 10, 3 );
+
+
+
+
+
+
+add_action('template_redirect', 'custom_thankyou_page_redirect');
+
+function custom_thankyou_page_redirect() {
+    if (is_wc_endpoint_url('order-received')) {
+        // Replace 'your-custom-thankyou-page' with the slug of your custom "Thank You" page
+        $redirect_url = home_url('/order-received/');
+        wp_safe_redirect($redirect_url);
+        exit;
+    }
+}

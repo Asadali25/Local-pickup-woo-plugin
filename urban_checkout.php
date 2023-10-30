@@ -95,6 +95,7 @@ function urban_custom_checkout_add_live_search_box() {
             <label class="custom-radio-btn"><input type="radio" name="customer-selection" id="radio3" value="option_3">
             ПУСТЬ МЕНЕДЖЕР ПОДСКАЖЕТ <span class="checkmark"></span></label>
             <p class="label3-text">Подберем самое удобное для вас, <span>2-3 дня</span></p>
+            <input type="text" class="citycodeinput" id="city_code_input" name = "city_code" readonly >
         </div>
 
     </div>

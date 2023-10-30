@@ -29,16 +29,16 @@ console.log('connected succesfully');
 // City Dropdown LI selection
 const targetList = document.getElementById("urban_dropdown");
 const targetInput = document.getElementById("urban_input");
-
+const CityCodeInput = document.getElementById("city_code_input");
 targetList.addEventListener("click", function(event) {
   let clickedListItem = event.target.closest("li");
-  
   if (clickedListItem) {
     let cityID = clickedListItem.querySelector(".cityId");
     sendCityID(cityID.textContent);
     const citySpan = clickedListItem.querySelector(".list-city");
 
-    targetInput.value = citySpan.textContent + ' - ' + cityID.textContent;
+    targetInput.value = citySpan.textContent;
+    CityCodeInput.value = cityID.textContent;
   }
 });
 

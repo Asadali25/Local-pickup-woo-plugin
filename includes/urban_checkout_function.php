@@ -185,7 +185,7 @@ function custom_radio_order_notes($order_id) {
 
 
 
-        
+    // Get Billing Address from Custom field
 add_filter('woocommerce_checkout_posted_data', 'update_billing_address_from_custom_field');
 
 function update_billing_address_from_custom_field($posted_data) {
@@ -204,7 +204,7 @@ function update_billing_address_from_custom_field($posted_data) {
 
 
 
-
+// Get city name from custom city field
 add_filter('woocommerce_checkout_posted_data', 'update_billing_city_from_custom_field');
 
 function update_billing_city_from_custom_field($posted_data) {
@@ -219,6 +219,11 @@ function update_billing_city_from_custom_field($posted_data) {
     return $posted_data;
 }
 
+
+
+
+
+// Get City code from custom field from checkout
 add_filter('woocommerce_checkout_posted_data', 'update_billing_city_code_from_custom_field');
 
 function update_billing_city_code_from_custom_field($posted_data) {
@@ -236,12 +241,13 @@ function update_billing_city_code_from_custom_field($posted_data) {
 
 
 
+
+// Add slashed regular price on checkout products subtotal
 function add_slashed_regular_price_on_checkout_subtotal( $subtotal, $cart_item, $cart_item_key ) {
     $product = $cart_item['data'];
 
     if ( $product->is_on_sale() ) {
         $regular_price = wc_price( $product->get_regular_price() );
-        $sale_price = wc_price( $product->get_sale_price() );
 
         // Create a string with the slashed regular price and the sale price
         $item_price = ' <del>' . $regular_price . '</del>';
@@ -259,6 +265,7 @@ add_filter( 'woocommerce_cart_item_subtotal', 'add_slashed_regular_price_on_chec
 
 
 
+// Redirect user to custom thankyou page
 add_action('template_redirect', 'custom_thankyou_page_redirect');
 
 function custom_thankyou_page_redirect() {
@@ -269,3 +276,73 @@ function custom_thankyou_page_redirect() {
         exit;
     }
 }
+
+
+
+
+
+
+// Create Custom Shotcode to display order ID on Page
+function custom_latest_order_number_shortcode() {
+    $latest_order = wc_get_orders(array(
+        'numberposts' => 1,
+        'orderby' => 'date',
+        'order' => 'DESC',
+    ));
+
+    if (!empty($latest_order)) {
+        return $latest_order[0]->get_order_number();
+    } else {
+        return 'No orders found';
+    }
+}
+
+add_shortcode('latest_order_number', 'custom_latest_order_number_shortcode');
+
+
+
+
+
+
+
+
+
+// Add slashed regular price on cart items
+function woodiscpr_change_cart_table_price_display( $price, $values, $cart_item_key ) {
+	$slashed_price = $values['data']->get_price_html();
+	$is_on_sale = $values['data']->is_on_sale();
+	if ( $is_on_sale ) {
+		$price = $slashed_price;
+	}
+	return $price;
+}
+add_filter( 'woocommerce_cart_item_price', 'woodiscpr_change_cart_table_price_display', 30, 3 );
+
+
+
+
+
+
+
+
+
+// Add discout to the order total
+function custom_order_total_html($total_html) {
+    $regular_price_total = 0;
+
+    foreach (WC()->cart->get_cart() as $cart_item) {
+        $product = $cart_item['data'];
+        $regular_price = $product->get_regular_price();
+        $regular_price_total += $regular_price;
+    }
+ $regular_price_total = wc_price($regular_price_total);
+    // Format the regular price total
+    $final_total = '<del>' . $regular_price_total . '</del>';
+    
+    // Append the final total to the left side of the order total HTML
+    $total_html = $final_total . ' ' . $total_html;
+
+    return $total_html;
+}
+
+add_filter('woocommerce_cart_totals_order_total_html', 'custom_order_total_html');

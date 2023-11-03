@@ -43,37 +43,30 @@ targetList.addEventListener("click", function(event) {
 });
 
 
+
+
+
 // Change Text For level One Checkout
   let h3element = $('.woocommerce-billing-fields').find('h3');
   h3element.html('<svg width="21" height="21" viewBox="0 0 21 21" fill="none" class="lvl1" xmlns="http://www.w3.org/2000/svg"><path d="M8.32354 7.57V6.25L11.9235 5.35V16H10.6485V6.88L8.32354 7.57Z" fill="#2B2B2B"/><circle cx="10.5" cy="10.5" r="10" stroke="#2B2B2B"/></svg><h3 class="billing-lv1"> Введите ваши Данные</h3>');
 
 
+
+
+
 // Disable Divs on checkout
  function DisableHTML(isenabled){
-  $("#l2option_1").find("#radio1").prop("disabled", isenabled);
   if(isenabled){
-  $('#l2option_1').fadeTo('fast',.6);
+    $("#l2option_1").css('display', 'none');
   } else{
     $('#l2option_1').fadeTo('fast',1);
   }}
   DisableHTML(true);
 
-  function EnableHTML(isdisabled) {
-    $("#levelid2").find("#radio2, #billingAddress, #radio3 ").prop("disabled", isdisabled);
 
-    if (isdisabled) {
-        $("#levelid2").fadeOut('fast', function() {
-            $(this).css('display', 'none');
-        });
-    } else {
-        $("#levelid2").fadeIn('fast', function() {
-            $(this).css('display', 'block');
-        });
-    }
-}
 
-// To hide the elements with a fade animation and set display to "none"
-EnableHTML(true);
+
+
 
 
 
@@ -142,7 +135,7 @@ $.ajax({
         // Handle the response from the server
         const pickup_data = JSON.parse(response);
         DisableHTML(true);
-        EnableHTML(false);
+        $("#levelid2").css('display', 'block');
         if(!jQuery.isEmptyObject(pickup_data)){
           DisableHTML(false);
           yadex_modal(pickup_data);

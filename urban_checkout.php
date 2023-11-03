@@ -3,7 +3,7 @@
 /*
 Plugin Name: Urban Custom Checkout
 Description: Add Custom Functionality to Checkout Page
-Version: 11.0
+Version: 15.1
 Author: Asad Ali
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
@@ -140,7 +140,7 @@ function custom_html_for_modal(){
 
 function custom_html_before_order(){
 ?>
-  <div class = "order_row1">
+ <div class = "order_row1">
 <div class="row1_svg">
 <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21" fill="none">
   <circle cx="10.5" cy="10.5" r="8.75" stroke="#1C274C" stroke-width="1.5"/>
@@ -220,7 +220,7 @@ function custom_woocommerce_breadcrumbs(){
 }
 
 
-//    _______Add Actions____________
+//                     _______Add Actions____________
 add_action('woocommerce_before_checkout_form' , 'custom_woocommerce_breadcrumbs');
 add_action('wp_enqueue_scripts', 'enqueue_plugin_assets_on_checkout');
 add_action('woocommerce_review_order_before_submit', 'custom_html_before_order');

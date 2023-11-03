@@ -18,12 +18,12 @@ color: #000 !important;
 .checkout_header{
 display: flex;
 justify-content: space-between;
-padding: 24px 40px !important;
+padding: 24px 40px;
 background-color: #fff;
 }
 @media screen and (max-width: 1025px){
 	.checkout_header{
-		padding: 24px 60px !important;
+		padding: 24px 60px;
 	}
 	
 }
@@ -58,7 +58,7 @@ margin-top: -5px !important;
 
 	.checkout_header{
 		
-		padding: 20px 40px;
+		padding: 20px 25px;
 		flex-direction: column;
 		justify-content: center;
 		}
@@ -347,7 +347,7 @@ padding: 20px !important;
         /* Style the custom checkmark (span) */
         .custom-radio-btn .checkmark {
             position: absolute;
-            top: 0;
+            top: 2px;
             left: 0;
             height: 18px; /* Adjust as needed */
             width: 18px; /* Adjust as needed */
@@ -424,6 +424,9 @@ padding: 20px !important;
 	padding-top: 15px;
 	padding-bottom: 20px;
 }
+.map{
+	flex: 3;
+}
 
 #openModal{
 	background-color: transparent;
@@ -471,14 +474,14 @@ padding: 20px !important;
 	  }
 	  #popup-content {
 		z-index: 9999;
-	  }
+		padding-right: 0px;
+			  }
 	  #close-button{
 		top: -4px !important;
 		right: 0px !important;
 	  }
 }
   /* modal close */
-  
 
   /* Pop Up */
   #popup {
@@ -546,11 +549,14 @@ padding: 20px !important;
 #select_pickup{
 	background-color: transparent;
     color: black;
+	border-radius: 0px !important;
+	padding: 15px;
 	border: 1px solid black;
 	width: 100%;
 	font-size: 16px;
 	font-weight: 400;
 }
+
 .balloon-body {
 	text-align: left;
   }
@@ -576,10 +582,7 @@ padding: 20px !important;
 	position: relative;
   
   }
-  
-  .map {
-	flex : 3;
-  }
+
   
   #searchInput {
 	padding: 14px;
@@ -640,6 +643,12 @@ padding: 20px !important;
 		width: 100%;
 		flex: 1;
 	}
+	#popup{
+		height: 94%;
+	}
+	.search-content{
+		width: 100%;
+	}
 }
 
   /* order css */
@@ -672,10 +681,6 @@ padding: 20px !important;
 	align-items: center;
 	gap: 8px;
 }
-.row2_text{
-	padding-right: 4px;
-}
-
 
 /* checkout order review after order button */
 .phone_block{
@@ -705,8 +710,8 @@ td.product-total{
 }
 .product-total  > .woocommerce-Price-amount.amount{
 	position: absolute !important;
-    right: 10px !important; 
-    bottom: 18px !important;
+    right: 10px ;
+    bottom: 20px ;
 	color: #B89A72 !important;
 	font-size: 16px;
 	font-weight: 600;
@@ -714,12 +719,21 @@ td.product-total{
 }
 .product-total  > .woocommerce-Price-amount.amount + del{
 position: absolute;
-bottom: 18px;
+bottom: 20px;
 font-size: 16px;
-right: 90px;
+right: 80px;
 font-weight: 400;
 color: #C0C0C0;
 }
+@media screen and (max-width:786px) {
+
+.product-total  > .woocommerce-Price-amount.amount{
+bottom: 25px;
+	
+}
+.product-total  > .woocommerce-Price-amount.amount + del{
+bottom: 25px;
+}}
 
 
 .product-quantity{
@@ -750,6 +764,10 @@ color: #C0C0C0;
 	border: none !important;
 	color: #B89A72 !important;
 
+}
+.order-total > td > del{
+font-weight: 400;
+color: #C0C0C0;
 }
 .cart-subtotal{
 	display: none !important;
@@ -807,4 +825,8 @@ font-size: 15px;
 }
 .citycodeinput{
 	display: none !important;
+}
+
+#levelid2{
+	display: none;
 }

@@ -3,7 +3,7 @@
 /*
 Plugin Name: Urban Custom Checkout
 Description: Add Custom Functionality to Checkout Page
-Version: 15.1
+Version: 16.1
 Author: Asad Ali
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
@@ -86,7 +86,7 @@ function urban_custom_checkout_add_live_search_box() {
             
         </div>
         <div class="lvl2-opt2" id="l2option_2">
-           <label class="custom-radio-btn"> <input type="radio" name="customer-selection" id="radio2" value="option_2" checked>
+           <label class="custom-radio-btn"> <input type="radio" name="customer-selection" id="radio2" value="option_2"checked >
             Курьер сдэк, 0 Руб. <span class="checkmark"></span></label>
             <p class="label2-text">К вам домой, на дачу или в офис, <span> 2-3 дня</span></p>
             <input type="text" name="billing_address" id="billingAddress" class="billing_adr" placeholder="Номер дома и название улицы">
@@ -154,7 +154,7 @@ function custom_html_before_order(){
 
 <div class="order_row2">
 <div class="row2_svg">
-<svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 21 21" fill="none">
   <path d="M10.5 7V10.5L12.6875 12.6875" stroke="#2B2B2B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M4.90362 4.90362L4.37329 4.37329L4.37329 4.37329L4.90362 4.90362ZM3.79554 6.01171L3.04555 6.01547C3.04762 6.42674 3.3805 6.75963 3.79177 6.7617L3.79554 6.01171ZM6.01913 6.77289C6.43334 6.77497 6.77081 6.44088 6.77289 6.02667C6.77497 5.61246 6.44088 5.27499 6.02667 5.27291L6.01913 6.77289ZM4.53434 3.78058C4.53226 3.36637 4.19479 3.03228 3.78058 3.03436C3.36637 3.03644 3.03228 3.37391 3.03436 3.78812L4.53434 3.78058ZM3.44116 9.44954C3.49741 9.03916 3.21034 8.66088 2.79996 8.60463C2.38958 8.54838 2.01131 8.83546 1.95506 9.24584L3.44116 9.44954ZM16.5707 4.42926C13.1921 1.05061 7.73109 1.0155 4.37329 4.37329L5.43395 5.43395C8.19593 2.67197 12.7071 2.68698 15.5101 5.48992L16.5707 4.42926ZM4.42926 16.5707C7.80791 19.9494 13.2689 19.9845 16.6267 16.6267L15.566 15.566C12.8041 18.328 8.29286 18.313 5.48992 15.5101L4.42926 16.5707ZM16.6267 16.6267C19.9845 13.2689 19.9494 7.80791 16.5707 4.42926L15.5101 5.48992C18.313 8.29286 18.328 12.8041 15.566 15.566L16.6267 16.6267ZM4.37329 4.37329L3.26521 5.48138L4.32587 6.54204L5.43395 5.43395L4.37329 4.37329ZM3.79177 6.7617L6.01913 6.77289L6.02667 5.27291L3.79931 5.26171L3.79177 6.7617ZM4.54553 6.00794L4.53434 3.78058L3.03436 3.78812L3.04555 6.01547L4.54553 6.00794ZM1.95506 9.24584C1.59996 11.8365 2.42693 14.5684 4.42926 16.5707L5.48992 15.5101C3.83087 13.851 3.14753 11.5918 3.44116 9.44954L1.95506 9.24584Z" fill="#2B2B2B"/>
 </svg>
@@ -229,7 +229,7 @@ add_action('wp_ajax_live_search', 'live_search_callback');
 add_action('wp_ajax_nopriv_live_search', 'live_search_callback'); // Allow for non-logged-in users
 add_action('woocommerce_after_checkout_billing_form', 'urban_custom_checkout_add_live_search_box'); // Add live search box
 add_action('woocommerce_after_checkout_form', 'custom_html_for_modal');
-add_action('wp', 'add_text_to_checkout_page');
+add_action('wp_body_open', 'add_text_to_checkout_page');
 add_action('admin_init', 'urban_custom_checkout_check_woocommerce');
 
 

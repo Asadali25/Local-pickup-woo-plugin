@@ -671,8 +671,18 @@ padding: 20px !important;
 	align-items: center;
 	gap: 8px;
 }
+.row1_svg{
+display: flex;
+align-items: center;
+}
+
+.row2_svg{
+	display: flex;
+	align-items: center;
+}
+
 .row1_text{
-	padding-right: 25px;
+	padding-right: 21px;
 }
 
 .order_row2{
@@ -830,3 +840,4 @@ font-size: 15px;
 #levelid2{
 	display: none;
 }
+

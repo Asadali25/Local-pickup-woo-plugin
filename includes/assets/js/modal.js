@@ -1,8 +1,8 @@
 function yadex_modal(data) {
-  // console.log('Here is the data from other file : ' + data);
-  let pickupPointData = data;
-  console.log(pickupPointData);
 
+
+
+  let pickupPointData = data;
   const openModalButton = document.getElementById("openModal");
   const closeModalButton = document.getElementById("closeModal");
   const modal = document.getElementById("modal");
@@ -11,18 +11,18 @@ function yadex_modal(data) {
 
 
 
-
-  openModalButton.addEventListener("click", () => {
+    openModalButton.addEventListener("click", () => {
     modal.style.display = "block";
     document.body.classList.add("modal-open");
     header.style.display = "none";
-  });
+    });
 
 
 
 
 
-  function closeModal() {
+    closeModalButton.addEventListener("click", closeModal);
+    function closeModal() {
     modal.style.display = "none";
     document.body.classList.remove("modal-open");
     header.style.display = "block";
@@ -32,12 +32,9 @@ function yadex_modal(data) {
 
 
 
-  closeModalButton.addEventListener("click", closeModal);
-  
-
-let map;
 
   // initialize map
+  let map;
   ymaps.ready(initMap);
   async function initMap() {
     const firstPickupPoint = pickupPointData[0];
@@ -50,9 +47,14 @@ let map;
     
 createMarkers(map, pickupPointData);
 
+// Destry Map on clicking select Botton
 const inputField = document.getElementById("urban_input");
 inputField.addEventListener("change", function() {
   map.destroy();
+  // Reset Address Field 
+  document.getElementById("pickupAddress").value = "";
+
+
 });
 }
 
@@ -135,13 +137,6 @@ inputField.addEventListener("change", function() {
       const objectId = e.get("objectId");
       const object = objectManager.objects.getById(objectId);
       const combinedContent = `${object.properties.balloonContentHeader}<br>${object.properties.balloonContentBody}`;
-      
-
-
-
-
-
-
       const parser = new DOMParser();
       const headerDocument = parser.parseFromString(object.properties.balloonContentHeader, "text/html");
       const pickupName = headerDocument.body.textContent;
@@ -149,22 +144,15 @@ inputField.addEventListener("change", function() {
       const selected_pickup = document.getElementById("select_pickup");
       const level2_input_id = document.getElementById("pickupAddress");
       // click event on popup button
+
       selected_pickup.addEventListener("click", () => {
         level2_input_id.value = pickupName;
         closeModal();
+        document.getElementById("popup").classList.remove("active");
         });
-
-
-
-      // Show the modal
+        // Show the popup
       document.getElementById("popup").classList.add("active");
     });
-
-
-
-
-
-
 
     // Close the popup when the close button is clicked
     const closeButton = document.getElementById("close-button");
@@ -173,6 +161,10 @@ inputField.addEventListener("change", function() {
     });
 
   }
+
+
+
+
 
 
 

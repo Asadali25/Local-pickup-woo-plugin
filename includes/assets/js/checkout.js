@@ -46,13 +46,6 @@ targetList.addEventListener("click", function(event) {
 
 
 
-// Change Text For level One Checkout
-  let h3element = $('.woocommerce-billing-fields').find('h3');
-  h3element.html('<svg width="21" height="21" viewBox="0 0 21 21" fill="none" class="lvl1" xmlns="http://www.w3.org/2000/svg"><path d="M8.32354 7.57V6.25L11.9235 5.35V16H10.6485V6.88L8.32354 7.57Z" fill="#2B2B2B"/><circle cx="10.5" cy="10.5" r="10" stroke="#2B2B2B"/></svg><h3 class="billing-lv1"> Введите ваши Данные</h3>');
-
-
-
-
 
 // Disable Divs on checkout
  function DisableHTML(isenabled){
@@ -92,6 +85,8 @@ radioBox1.addEventListener("change", function() {
   }
 });
 
+
+
 radioBox2.addEventListener("change", function() {
   if (radioBox2.checked) {
     ModalOpen.setAttribute("disabled", "true");
@@ -103,6 +98,9 @@ radioBox2.addEventListener("change", function() {
 
   }
 });
+
+
+
 
 radioBox3.addEventListener("change", function() {
   if (radioBox3.checked) {
@@ -144,8 +142,4 @@ $.ajax({
     }
 });
 
-}
-
-
-
-});
+}});

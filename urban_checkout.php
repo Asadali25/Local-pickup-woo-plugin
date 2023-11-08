@@ -81,7 +81,7 @@ function urban_custom_checkout_add_live_search_box() {
             САМОВЫВОЗ СДЭК, 0 руб. <span class="checkmark"></span></label>
             <p class="label1-text">Из удобного Пункта Выдачи с отдельной примерочной, <span>2-3 дня</span></p>
             <button type="button" id="openModal" disabled >Выбрать пункт выдачи</button> <br>
-            <input type="text" name="pickup_address" id="pickupAddress" class="pickup_adr" readonly >
+            <input type="text" name="pickup_address1" id="pickupAddress" class="pickup_adr" readonly >
 
             
         </div>
@@ -89,7 +89,7 @@ function urban_custom_checkout_add_live_search_box() {
            <label class="custom-radio-btn"> <input type="radio" name="customer-selection" id="radio2" value="option_2"checked >
             Курьер сдэк, 0 Руб. <span class="checkmark"></span></label>
             <p class="label2-text">К вам домой, на дачу или в офис, <span> 2-3 дня</span></p>
-            <input type="text" name="billing_address" id="billingAddress" class="billing_adr" placeholder="Номер дома и название улицы">
+            <input type="text" name="pickup_address2" id="billingAddress" class="billing_adr" placeholder="Номер дома и название улицы">
         </div>
         <div class="lvl2-opt3" id="l2option_3">
             <label class="custom-radio-btn"><input type="radio" name="customer-selection" id="radio3" value="option_3">

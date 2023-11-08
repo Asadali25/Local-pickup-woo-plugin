@@ -137,13 +137,14 @@ function hide_coupon_field_on_cart( $enabled ) {
 
 
 
-    // woocommerce input validataion and notice
-// function ask_manager_field_validation() {
-//     if (empty($_POST['billing_address'])) {
-//         wc_add_notice('Please Enter Address or Choose From Map.', 'error');
-//     }
-// }
-// add_action('woocommerce_checkout_process', 'ask_manager_field_validation');
+// // woocommerce input validataion and notice
+function ask_manager_field_validation() {
+        // Check if both fields are filled
+        if (empty($_POST['pickup_address1']) && empty($_POST['pickup_address2'])) {
+            wc_add_notice('Please fill only one of the pickup address fields.', 'error');
+}
+}
+add_action('woocommerce_checkout_process', 'ask_manager_field_validation');
 
 
 
@@ -186,21 +187,21 @@ function custom_radio_order_notes($order_id) {
 
 
     // Get Billing Address from Custom field
-add_filter('woocommerce_checkout_posted_data', 'update_billing_address_from_custom_field');
+    add_filter('woocommerce_checkout_posted_data', 'update_billing_address_from_custom_field');
 
-function update_billing_address_from_custom_field($posted_data) {
-    if (isset($_POST['pickup_address'])) {
-        // Get the custom address value
-        $customAddress = $_POST['pickup_address'];
+    function update_billing_address_from_custom_field($posted_data) {
 
-        // Update the billing address with the custom address
-        $posted_data['billing_address_1'] = $customAddress;
+        if (!empty($_POST['pickup_address1'])) {
+            // If pickup_address1 is filled, update billing address with it
+            $posted_data['billing_address_1'] = $_POST['pickup_address1'];
+        } elseif (!empty($_POST['pickup_address2'])) {
+            // If pickup_address2 is filled, update billing address with it
+            $posted_data['billing_address_1'] = $_POST['pickup_address2'];
+        }
+    
+        return $posted_data;
     }
-
-    return $posted_data;
-}
-
-
+    
 
 
 

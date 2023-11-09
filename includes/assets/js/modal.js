@@ -197,9 +197,7 @@ inputField.addEventListener("change", function() {
 
 
 
-
-  let zoomSet = false; // Flag to track whether the zoom has been set
-
+ let zoomSet = false; // Flag to track whether the zoom has been set
   function mapgoto(coords) {
     map.panTo([coords.latitude, coords.longitude]);
   

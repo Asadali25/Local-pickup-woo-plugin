@@ -11,6 +11,9 @@ function custom_free_shipping_label($label, $method) {
 add_filter('woocommerce_cart_shipping_method_full_label', 'custom_free_shipping_label', 10, 2);
 
 
+
+
+
 // Remove Payment Methods 
 add_action('woocommerce_review_order_before_payment', 'disable_payment_methods_for_checkout');
 
@@ -31,6 +34,7 @@ function remove_all_payment_gateways() {
 
 
 
+
 // Just hide woocommerce billing country
 add_action('woocommerce_before_checkout_form', 'hide_checkout_billing_country', 5);
 function hide_checkout_billing_country() {
@@ -39,7 +43,10 @@ function hide_checkout_billing_country() {
 
 
 
-// Hide Woocommerce fields
+
+
+
+// Disable Woocommerce fields
 add_filter('woocommerce_billing_fields', 'customize_billing_fields', 100);
 function customize_billing_fields($fields ) {
     if (is_checkout()) {
@@ -59,22 +66,6 @@ function customize_billing_fields($fields ) {
 
 
 
-// Chane Checkout Fields Placeholders
-add_filter( 'woocommerce_checkout_fields', 'customize_woo_checkout_fields' );
-  function customize_woo_checkout_fields( $fields ) {
-
-	unset( $fields['shipping']['shipping_last_name'] );
-    $fields['shipping']['shipping_first_name']['placeholder'] = 'Full name';
-    $fields['shipping']['shipping_first_name']['label'] = 'Full name';
-
-	
-    unset( $fields['billing']['billing_last_name'] );
-    $fields['billing']['billing_first_name']['placeholder'] = 'Full name';
-    $fields['billing']['billing_first_name']['label'] = 'Full name';
-
-    return $fields;
-
-}
 
 
 //CHANGE PREIORITY FIELDS
@@ -84,6 +75,9 @@ function misha_email_first($checkout_fields) {
     // $checkout_fields['billing']['billing_address_1']['priority'] = 100;
     return $checkout_fields;
 }
+
+
+
 
 
 
@@ -115,12 +109,19 @@ function override_billing_checkout_fields( $fields ) {
 
 
 
+
+
+
 // Disable Order Comment
 add_filter( 'woocommerce_checkout_fields' , 'njengah_order_notes' );
 function njengah_order_notes( $fields ) {
 unset($fields['order']['order_comments']);
 return $fields;
 }
+
+
+
+
 
 // Remove "Have a Coupen"
 function hide_coupon_field_on_cart( $enabled ) {
@@ -133,18 +134,6 @@ function hide_coupon_field_on_cart( $enabled ) {
 
 
 
-
-
-
-
-// // woocommerce input validataion and notice
-function ask_manager_field_validation() {
-        // Check if both fields are filled
-        if (empty($_POST['pickup_address1']) && empty($_POST['pickup_address2'])) {
-            wc_add_notice('Please fill only one of the pickup address fields.', 'error');
-}
-}
-add_action('woocommerce_checkout_process', 'ask_manager_field_validation');
 
 
 
@@ -166,8 +155,6 @@ function custom_radio_order_notes($order_id) {
         $order->add_order_note("Customer selected radio option: $radio_option");
     }
 }
-
-
 
 
 
@@ -202,6 +189,27 @@ function custom_radio_order_notes($order_id) {
         return $posted_data;
     }
     
+
+
+
+
+
+
+function option_field_validation() {
+    // Check if the specific radio button is selected
+    if (isset($_POST['customer-selection']) && $_POST['customer-selection'] === 'option_3') {
+        // If the radio button is selected, do not perform any validation
+        return;
+    }
+
+    // Check if both fields are filled
+    if (empty($_POST['pickup_address1']) && empty($_POST['pickup_address2'])) {
+        wc_add_notice('Please fill one of the pickup address fields.', 'error');
+    }
+}
+add_action('woocommerce_checkout_process', 'option_field_validation');
+
+
 
 
 
@@ -347,3 +355,4 @@ function custom_order_total_html($total_html) {
 }
 
 add_filter('woocommerce_cart_totals_order_total_html', 'custom_order_total_html');
+

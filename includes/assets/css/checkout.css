@@ -14,7 +14,9 @@ color: #000 !important;
 	max-width: 1250px;
 	width: 100%;
 }
-
+.invalid {
+	border-bottom: 1px solid red !important;
+}
 .checkout_header{
 display: flex;
 justify-content: space-between;

@@ -31,5 +31,4 @@ add_action('wp_ajax_my_ajax_action', 'handle_ajax_req');
 add_action('wp_ajax_nopriv_my_ajax_action', 'handle_ajax_req');
 
 
-
 ?>

@@ -115,6 +115,10 @@ radioBox3.addEventListener("change", function() {
   }
 });
 
+
+
+
+
 // Input validation For Name And Contact Field 
 function setupInputValidation(inputField, validationRegex) {
   inputField.addEventListener('input', function () {
@@ -133,13 +137,17 @@ function setupInputValidation(inputField, validationRegex) {
   });
 }
 
+
+
+
+
 // Usage for phone validation
 const PhoneField = document.getElementById('billing_phone');
-setupInputValidation(PhoneField, /^\d+$/);
+setupInputValidation(PhoneField, /^[\d()+-]*$/);
 
 // Usage for name validation
 const NameField = document.getElementById('billing_first_name');
-setupInputValidation(NameField, /^[A-Za-z]+$/);
+setupInputValidation(NameField, /^[A-Za-zА-Яа-я\s]*$/);
 
 
 

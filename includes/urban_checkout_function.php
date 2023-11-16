@@ -139,27 +139,6 @@ function hide_coupon_field_on_cart( $enabled ) {
 
 
 
-// Add order note for custom Radio
-add_action('woocommerce_new_order', 'custom_radio_order_notes');
-
-function custom_radio_order_notes($order_id) {
-    // Get the order object
-    $order = wc_get_order($order_id);
-
-    // Check if the order exists
-    if ($order) {
-        // Get the selected radio option
-        $radio_option = sanitize_text_field($_POST['customer-selection']);
-
-        // Add a note to the order
-        $order->add_order_note("Customer selected radio option: $radio_option");
-    }
-}
-
-
-
-
-
         // woocommerce input validataion and notice
         function custom_validate_city_input_option() {
             if (empty($_POST['city_name'])) {
@@ -178,13 +157,20 @@ function custom_radio_order_notes($order_id) {
 
     function update_billing_address_from_custom_field($posted_data) {
 
+        // For Customer order Selection Note 
+        $posted_data['billing_address_2'] = 'Method: ' . $_POST['customer-selection'];
+
+
+        
         if (!empty($_POST['pickup_address1'])) {
             // If pickup_address1 is filled, update billing address with it
-            $posted_data['billing_address_1'] = $_POST['pickup_address1'];
+            $posted_data['billing_address_1'] = 'Pick-up: ' . $_POST['pickup_address1'];
+
         } elseif (!empty($_POST['pickup_address2'])) {
             // If pickup_address2 is filled, update billing address with it
-            $posted_data['billing_address_1'] = $_POST['pickup_address2'];
+            $posted_data['billing_address_1'] = 'Address: ' . $_POST['pickup_address2'];
         }
+
     
         return $posted_data;
     }
@@ -197,7 +183,7 @@ function custom_radio_order_notes($order_id) {
 
 function option_field_validation() {
     // Check if the specific radio button is selected
-    if (isset($_POST['customer-selection']) && $_POST['customer-selection'] === 'option_3') {
+    if (isset($_POST['customer-selection']) && $_POST['customer-selection'] === 'Manager Help') {
         // If the radio button is selected, do not perform any validation
         return;
     }
@@ -213,13 +199,16 @@ add_action('woocommerce_checkout_process', 'option_field_validation');
 
 
 
+
+
+
 // Get city name from custom city field
 add_filter('woocommerce_checkout_posted_data', 'update_billing_city_from_custom_field');
 
 function update_billing_city_from_custom_field($posted_data) {
     if (isset($_POST['city_name'])) {
         // Get the custom city value
-        $customCity = $_POST['city_name'];
+        $customCity = 'City: ' . $_POST['city_name'];
 
         // Update the billing city with the custom address
         $posted_data['billing_city'] = $customCity;
@@ -232,13 +221,14 @@ function update_billing_city_from_custom_field($posted_data) {
 
 
 
+
 // Get City code from custom field from checkout
 add_filter('woocommerce_checkout_posted_data', 'update_billing_city_code_from_custom_field');
 
 function update_billing_city_code_from_custom_field($posted_data) {
     if (isset($_POST['city_code'])) {
         // Get the custom city value
-        $customCityCode = $_POST['city_code'];
+        $customCityCode = 'City-code: ' . $_POST['city_code'];
 
         // Update the billing city with the custom address
         $posted_data['billing_postcode'] = $customCityCode;
@@ -246,6 +236,7 @@ function update_billing_city_code_from_custom_field($posted_data) {
 
     return $posted_data;
 }
+
 
 
 

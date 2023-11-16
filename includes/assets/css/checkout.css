@@ -15,7 +15,7 @@ color: #000 !important;
 	width: 100%;
 }
 .invalid {
-	border-bottom: 1px solid red !important;
+	border-bottom: 2px solid red !important;
 }
 .checkout_header{
 display: flex;

@@ -77,7 +77,7 @@ function urban_custom_checkout_add_live_search_box() {
 </svg><h2 class="billing-lv2"> Выберите способ Доставки</h2>
 </div>
         <div class="lvl2-opt1" id="l2option_1">
-           <label class="custom-radio-btn"> <input type="radio" name="customer-selection" id="radio1" value="option_1">
+           <label class="custom-radio-btn"> <input type="radio" name="customer-selection" id="radio1" value="pick-up point">
             САМОВЫВОЗ СДЭК, 0 руб. <span class="checkmark"></span></label>
             <p class="label1-text">Из удобного Пункта Выдачи с отдельной примерочной, <span>2-3 дня</span></p>
             <button type="button" id="openModal" disabled >Выбрать пункт выдачи</button> <br>
@@ -86,13 +86,13 @@ function urban_custom_checkout_add_live_search_box() {
             
         </div>
         <div class="lvl2-opt2" id="l2option_2">
-           <label class="custom-radio-btn"> <input type="radio" name="customer-selection" id="radio2" value="option_2"checked >
+           <label class="custom-radio-btn"> <input type="radio" name="customer-selection" id="radio2" value="Custom Address"checked >
             Курьер сдэк, 0 Руб. <span class="checkmark"></span></label>
             <p class="label2-text">К вам домой, на дачу или в офис, <span> 2-3 дня</span></p>
             <input type="text" name="pickup_address2" id="billingAddress" class="billing_adr" placeholder="Номер дома и название улицы">
         </div>
         <div class="lvl2-opt3" id="l2option_3">
-            <label class="custom-radio-btn"><input type="radio" name="customer-selection" id="radio3" value="option_3">
+            <label class="custom-radio-btn"><input type="radio" name="customer-selection" id="radio3" value="Manager Help">
             ПУСТЬ МЕНЕДЖЕР ПОДСКАЖЕТ <span class="checkmark"></span></label>
             <p class="label3-text">Подберем самое удобное для вас, <span>2-3 дня</span></p>
             <input type="text" class="citycodeinput" id="city_code_input" name = "city_code" readonly >
